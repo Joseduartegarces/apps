@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADHD Focus Toolkit - Frutiger Aero</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#00B2FF">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ADHD Toolkit">
+  <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom scrollbar for a more Frutiger Aero feel */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(220, 230, 255, 0.3); /* Light blueish track */
+      border-radius: 10px;
+    }
+    .dark ::-webkit-scrollbar-track {
+      background: rgba(30, 40, 70, 0.3); /* Darker track for dark mode */
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 178, 255, 0.6); /* Glossy blue thumb */
+      border-radius: 10px;
+      border: 2px solid rgba(220, 230, 255, 0.3); /* Track color border for inset look */
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: rgba(0, 178, 255, 0.5); /* Slightly less opaque thumb for dark */
+      border: 2px solid rgba(30, 40, 70, 0.3);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 178, 255, 0.8);
+    }
+    .dark ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 178, 255, 0.7);
+    }
+    /* Basic selection style */
+    ::selection {
+      background-color: #00B2FF; /* Primary blue */
+      color: white;
+    }
+    .dark ::selection {
+      background-color: #FFD700; /* Accent yellow for dark mode */
+      color: #1A202C; /* Dark text for dark mode selection */
+    }
+    body {
+      overscroll-behavior-y: contain; /* Prevents pull-to-refresh on standalone PWAs */
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: 'class', // Enable class-based dark mode
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#00B2FF', // Bright Sky Blue
+              light: '#AEEBFF', 
+              dark: '#008ECC',  
+              glass: 'rgba(0, 178, 255, 0.1)',
+              // Dark mode primary variants
+              DEFAULT_DARK: '#00A0DD', // Slightly desaturated or adjusted blue for dark screens
+              light_DARK: '#58CFFF',  // Lighter blue for dark accents
+              dark_DARK: '#007FAA',   // Darker blue for dark hover
+              glass_DARK: 'rgba(0, 160, 221, 0.15)',
+            },
+            secondary: {
+              DEFAULT: '#30D99C', // Vibrant Mint Green
+              light: '#A3F9D8',
+              dark: '#25B884',
+               // Dark mode secondary variants
+              DEFAULT_DARK: '#28C088',
+              light_DARK: '#7EF0C0',
+              dark_DARK: '#1F9A6F',
+            },
+            accent: {
+              DEFAULT: '#FFD700', // Sunny Yellow
+              light: '#FFF3A0',
+              dark: '#E6C200',
+              // Dark mode accent variants
+              DEFAULT_DARK: '#FFC800', // Slightly more saturated yellow for dark mode
+              light_DARK: '#FFE870',
+              dark_DARK: '#DDAA00',
+            },
+            neutral: {
+              lightest: '#F0F8FF', // AliceBlue - for main content backgrounds (light mode)
+              light: '#E0F0FF',   
+              DEFAULT: '#6B7280', 
+              dark: '#34495E',    
+              glass: 'rgba(255, 255, 255, 0.25)', 
+              glassDarker: 'rgba(240, 248, 255, 0.6)',
+              // Dark mode neutral variants
+              darkest: '#111827', // Very dark blue/gray for body bg
+              darker: '#1F2937',  // Dark gray for card/modal bg
+              DEFAULT_DARK: '#9CA3AF', // Mid-gray for text in dark mode
+              light_DARK: '#D1D5DB',   // Lighter gray for secondary text in dark mode
+              lightest_DARK: '#F3F4F6',// Almost white for primary text in dark mode
+              glass_DARK: 'rgba(31, 41, 55, 0.3)', // Dark glass for cards
+              glassDarker_DARK: 'rgba(55, 65, 81, 0.5)', // More opaque dark glass for modals
+            },
+            danger: {
+              DEFAULT: '#FF6B6B', 
+              dark: '#E05252',
+              DEFAULT_DARK: '#F05252', // Dark mode danger
+              dark_DARK: '#D03838',
+            }
+          },
+          fontFamily: {
+            sans: ['"Segoe UI"', 'Frutiger', '"Frutiger Linotype"', 'Univers', 'Calibri', 'Arial', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl': '1rem', 
+            '2xl': '1.5rem',
+            'glass': '12px', 
+          },
+          boxShadow: {
+            'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
+            'glass-inset': 'inset 0 2px 4px 0 rgba(255, 255, 255, 0.2), inset 0 -2px 2px 0 rgba(0, 0, 0, 0.05)',
+            'soft-lg': '0 10px 15px -3px rgba(0, 100, 150, 0.07), 0 4px 6px -2px rgba(0, 100, 150, 0.03)',
+            'button-gloss': '0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.3)',
+            // Dark mode shadows
+            'soft-lg-dark': '0 10px 15px -3px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.1)',
+            'button-gloss-dark': '0 1px 2px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
+          },
+          backgroundImage: {
+            'body-gradient': 'linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 50%, #81D4FA 100%)', 
+            'glass-shine': 'linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 50%, transparent 100%)',
+            // Dark mode gradients
+            'body-gradient-dark': 'linear-gradient(135deg, #1A202C 0%, #111827 50%, #0F172A 100%)', // Dark subtle gradient
+            'glass-shine-dark': 'linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 50%, transparent 100%)', // Shine for dark buttons
+          }
+        }
+      }
+    }
+  </script>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.6.1",
+    "react-dom": "https://esm.sh/react-dom@^19.1.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-body-gradient text-neutral-dark font-sans dark:bg-body-gradient-dark dark:text-neutral-light_DARK">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
